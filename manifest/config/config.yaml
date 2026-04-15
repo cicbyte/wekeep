@@ -1,0 +1,71 @@
+# https://goframe.org/docs/web/server-config-file-template
+server:
+  address: ":8000"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+  NameToUriType: 3
+  maxHeaderBytes: "20KB"
+  clientMaxBodySize: "50MB"
+  # Logging配置
+  logPath: "resource/log/server" # 日志文件存储目录路径，建议使用绝对路径。默认为空，表示关闭
+  logStdout: true # 日志是否输出到终端。默认为true
+  errorStack: true # 当Server捕获到异常时是否记录堆栈信息到日志中。默认为true
+  errorLogEnabled: true # 是否记录异常日志信息到日志中。默认为true
+  errorLogPattern: "error-{Ymd}.log" # 异常错误日志文件格式。默认为"error-{Ymd}.log"
+  accessLogEnabled: true # 是否记录访问日志。默认为false
+  accessLogPattern: "access-{Ymd}.log" # 访问日志文件格式。默认为"access-{Ymd}.log"
+
+logger:
+  path: "resource/log/run"
+  file: "{Y-m-d}.log"
+  level: "all"
+  stdout: true
+
+
+# https://goframe.org/docs/core/gdb-config-file
+database:
+  default:
+    # MySQL 示例
+    #link: "mysql:root:123456@tcp(127.0.0.1:3306)/wekeep?charset=utf8mb4&parseTime=true&loc=Local"
+    # SQLite 示例
+    link: "sqlite::@file(./wekeep.db)"
+
+# 存储配置（用于图片本地化存储）
+# 支持两种存储类型：local（本地文件系统）和 rustfs（S3兼容对象存储）
+storage:
+  # 存储类型：local（默认，本地存储）或 rustfs（对象存储）
+  type: "local"
+
+  # 本地文件系统配置（type=local 时使用）
+  local:
+    # 存储根目录，默认 ./uploads
+    basePath: "./uploads"
+    # 访问URL前缀，默认 /uploads
+    baseURL: "/uploads"
+
+  # RustFS 对象存储配置（type=rustfs 时使用）
+  rustfs:
+    endpoint: "http://192.168.31.93:19001"
+    bucket: "wekeep"
+    username: "rustfsadmin"
+    password: "rustfsadmin"
+    timeout: 60
+
+  # 图片配置
+  image:
+    maxFileSize: 10485760  # 10MB
+    pathPrefix: "articles/images"
+
+  # 迁移功能开关
+  migration:
+    enabled: false  # 是否启用存储迁移功能
+
+# 搜索配置
+search:
+  # 是否启用全文搜索（Meilisearch）
+  # false: 仅搜索标题（数据库 LIKE 查询）
+  # true: 全文搜索标题、作者、摘要、内容
+  enabled: false
+  # Meilisearch 地址（仅当 enabled=true 时需要）
+  meilisearch:
+    address: "http://192.168.31.93:45573"

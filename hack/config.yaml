@@ -1,0 +1,10 @@
+
+# CLI tool, only in development environment.
+# https://goframe.org/docs/cli
+gfcli:
+  gen:
+    dao:
+      - link: "mysql:root:hasd721ba9@tcp(192.168.31.93:39507)/wekeep"
+        descriptionTag: true
+  build:
+    packSrc: "resource/public,resource/sql"

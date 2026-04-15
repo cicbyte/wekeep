@@ -1,0 +1,58 @@
+/* 自定义滚动条样式 */
+
+/* 确保页面可滚动 */
+html, body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Webkit 浏览器 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* 深色模式 */
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.dark * {
+  scrollbar-color: #475569 transparent;
+}
+
+/* 文本选择颜色 */
+::selection {
+  background: rgba(7, 193, 96, 0.2);
+}
+
+.dark ::selection {
+  background: rgba(7, 193, 96, 0.3);
+}

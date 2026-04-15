@@ -90,21 +90,20 @@ database:
 # 构建镜像
 docker build -t wekeep .
 
-# 运行（默认 SQLite）
-docker run -d -p 8000:8000 -v wekeep-data:/data wekeep
-
-# 运行（MySQL + Meilisearch）
-# 需自行创建 config.yaml 并挂载到 /app/manifest/config/config.yaml
+# 运行
 docker run -d -p 8000:8000 \
-  -v wekeep-data:/data \
-  -v ./config.yaml:/app/manifest/config/config.yaml \
+  -v ./manifest:/app/manifest \
+  -v ./log:/app/log \
+  -v ./uploads:/app/uploads \
+  -v ./wekeep.db:/app/wekeep.db \
   wekeep
 ```
 
-数据持久化挂载 `/data`，包含：
-- `/data/log/` — 日志
-- `/data/db/` — SQLite 数据库
-- `/data/uploads/` — 本地存储
+挂载说明：
+- `./manifest` → `/app/manifest` — 配置文件（首次运行自动生成 `manifest/config/config.yaml`）
+- `./log` → `/app/log` — 日志
+- `./uploads` → `/app/uploads` — 上传文件
+- `./wekeep.db` → `/app/wekeep.db` — SQLite 数据库
 
 ## 项目结构
 

@@ -27,12 +27,6 @@ WORKDIR /app
 
 COPY --from=backend /build/wekeep /app/wekeep
 
-# 运行时目录结构
-# /data/log/      日志
-# /data/db/       SQLite 数据库
-# /data/uploads/  本地存储
-RUN mkdir -p /data/log /data/db /data/uploads
-
 ENV TZ=Asia/Shanghai
 EXPOSE 8000
 

@@ -10,6 +10,7 @@ import (
 	// SQLite数据库驱动,如果需要支持需要go get -u github.com/gogf/gf/contrib/drivers/sqlite/v2
 	_ "github.com/gogf/gf/contrib/drivers/sqlite/v2"
 
+	"github.com/gogf/gf/v2/os/gbuild"
 	"github.com/gogf/gf/v2/os/gctx"
 
 	"github.com/ciclebyte/wekeep/internal/cmd"
@@ -53,21 +54,21 @@ search:
 `
 
 func init() {
-	// 将工作目录切换到二进制文件所在目录
-	if exe, err := os.Executable(); err == nil {
-		if dir := filepath.Dir(exe); dir != "" {
-			os.Chdir(dir)
+	// 通过 gbuild 编译变量判断是否为生产构建（gf build 会注入，gf run 不会）
+	if gbuild.Get(gbuild.BuiltVersion) != nil {
+		if exe, err := os.Executable(); err == nil {
+			if dir := filepath.Dir(exe); dir != "" {
+				os.Chdir(dir)
+			}
 		}
+		ensureDefaultConfig()
 	}
-
-	// 确保默认配置文件存在（首次运行自动创建）
-	ensureDefaultConfig()
 }
 
 func ensureDefaultConfig() {
 	configPath := "manifest/config/config.yaml"
 	if _, err := os.Stat(configPath); err == nil {
-		return // 配置已存在，不覆盖
+		return
 	}
 	os.MkdirAll(filepath.Dir(configPath), 0755)
 	os.WriteFile(configPath, []byte(defaultConfig), 0644)

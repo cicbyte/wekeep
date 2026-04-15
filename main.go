@@ -20,7 +20,7 @@ import (
 const defaultConfig = `# WeKeep 配置文件（可修改）
 server:
   address: ":8000"
-  logPath: "/data/log/server"
+  logPath: "log/server"
   logStdout: true
   errorStack: true
   errorLogEnabled: true
@@ -29,19 +29,19 @@ server:
   accessLogPattern: "access-{Ymd}.log"
 
 logger:
-  path: "/data/log/run"
+  path: "log/run"
   file: "{Y-m-d}.log"
   level: "all"
   stdout: true
 
 database:
   default:
-    link: "sqlite::@file(/data/db/wekeep.db)"
+    link: "sqlite::@file(db/wekeep.db)"
 
 storage:
   type: "local"
   local:
-    basePath: "/data/uploads"
+    basePath: "uploads"
     baseURL: "/uploads"
   image:
     maxFileSize: 10485760

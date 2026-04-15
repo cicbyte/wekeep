@@ -93,13 +93,17 @@ docker build -t wekeep .
 # 运行
 docker run -d -p 8000:8000 \
   -v ./manifest:/app/manifest \
-  -v ./data:/data \
+  -v ./log:/app/log \
+  -v ./uploads:/app/uploads \
+  -v ./db:/app/db \
   wekeep
 ```
 
 挂载说明：
 - `./manifest` → `/app/manifest` — 配置文件（首次运行自动生成 `config.yaml`，可直接修改）
-- `./data` → `/data` — 运行时数据（`log/` 日志、`db/` SQLite 数据库、`uploads/` 上传文件）
+- `./log` → `/app/log` — 日志
+- `./uploads` → `/app/uploads` — 上传文件
+- `./db` → `/app/db` — SQLite 数据库
 
 ## 项目结构
 

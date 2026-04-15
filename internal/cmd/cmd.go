@@ -2,6 +2,9 @@ package cmd
 
 import (
 	"context"
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 
 	_ "github.com/ciclebyte/wekeep/internal/logic"
@@ -19,6 +22,9 @@ var (
 		Usage: "main",
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			// 确保 SQLite 数据目录存在
+			ensureDataDirs(ctx)
+
 			// 自动初始化数据表
 			autoMigrate(ctx)
 
@@ -70,6 +76,23 @@ var (
 		},
 	}
 )
+
+// ensureDataDirs 确保 SQLite 数据文件的父目录存在
+func ensureDataDirs(ctx context.Context) {
+	dbLink := g.Cfg().MustGet(ctx, "database.default.link").String()
+	if !strings.HasPrefix(dbLink, "sqlite") {
+		return
+	}
+	re := regexp.MustCompile(`@file\((.+)\)`)
+	matches := re.FindStringSubmatch(dbLink)
+	if len(matches) < 2 {
+		return
+	}
+	dir := filepath.Dir(matches[1])
+	if dir != "" && dir != "." {
+		os.MkdirAll(dir, 0755)
+	}
+}
 
 // initStorage 初始化存储模块
 func initStorage(ctx context.Context) {

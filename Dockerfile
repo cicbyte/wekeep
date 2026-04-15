@@ -26,9 +26,6 @@ RUN apk add --no-cache ca-certificates tzdata
 WORKDIR /app
 
 COPY --from=backend /build/wekeep /app/wekeep
-COPY --from=backend /build/manifest/config/config.yaml.example /app/manifest/config/config.yaml
-
-RUN mkdir -p /data/log /data/db /data/uploads
 
 ENV TZ=Asia/Shanghai
 EXPOSE 8000

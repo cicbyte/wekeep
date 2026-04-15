@@ -3,7 +3,7 @@
 
 server:
   address: ":8000"
-  logPath: "/data/log/server"
+  logPath: "log/server"
   logStdout: true
   errorStack: true
   errorLogEnabled: true
@@ -12,21 +12,21 @@ server:
   accessLogPattern: "access-{Ymd}.log"
 
 logger:
-  path: "/data/log/run"
+  path: "log/run"
   file: "{Y-m-d}.log"
   level: "all"
   stdout: true
 
 database:
   default:
-    link: "sqlite::@file(/data/db/wekeep.db)"
+    link: "sqlite::@file(db/wekeep.db)"
     # MySQL
     #link: "mysql:root:123456@tcp(172.17.0.1:3306)/wekeep?charset=utf8mb4&parseTime=true&loc=Local"
 
 storage:
   type: "local"
   local:
-    basePath: "/data/uploads"
+    basePath: "uploads"
     baseURL: "/uploads"
   # RustFS（S3 兼容对象存储）
   #type: "rustfs"

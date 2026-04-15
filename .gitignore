@@ -41,7 +41,7 @@ logs/
 
 # 包管理器文件
 Cargo.lock
-package-lock.json
+/package-lock.json
 yarn.lock
 
 # 压缩文件
@@ -59,3 +59,11 @@ uploads
 wekeep
 .claude/
 *.db
+
+# 部署配置（包含敏感信息，用 config.yaml.example 作为模板）
+docker-compose.yml
+config.yaml
+
+# 打包资源（自动生成）
+internal/packed/
+delete_tags.py

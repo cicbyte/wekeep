@@ -7,62 +7,104 @@
 - **文章收藏** — 抓取微信公众号文章，提取标题/作者/正文/图片，转换为 Markdown
 - **全文搜索** — 基于 Meilisearch 的全文检索，支持标题、作者、摘要、内容搜索
 - **图片本地化** — 自动下载文章图片到本地/S3 存储，支持存储后端迁移
-- **AI 集成** — MCP Server 提供 10 个工具，支持 AI 客户端（如 Claude）直接操作文章
+- **AI 集成** — MCP Server 提供 10 个工具，支持 Claude 等 AI 客户端直接操作文章
 - **分类管理** — 文章分类、标签体系
 - **作者管理** — 自动提取作者信息，按作者浏览文章
+- **零配置启动** — 首次运行自动生成默认配置文件，开箱即用
 
 ## 技术栈
 
 | 层级 | 技术 |
 |------|------|
-| 后端 | Go 1.24 / GoFrame v2.10.0 / MySQL |
+| 后端 | Go 1.24 / GoFrame v2.10.0 / MySQL / SQLite |
 | 前端 | React 19 / TypeScript 5.8 / Vite 6.2 / Tailwind CSS |
-| 搜索 | Meilisearch |
+| 搜索 | Meilisearch（可选） |
 | 存储 | 本地文件系统 / RustFS（S3 兼容） |
 | AI | Gemini API（文章解析）/ MCP Server（AI 工具集成） |
 
 ## 快速开始
 
-### 环境要求
+### 下载预编译二进制
 
-- Go 1.24+
-- Node.js 18+
-- MySQL 8.0+
-- Meilisearch（可选，用于全文搜索）
+从 [Releases](https://github.com/ciclebyte/wekeep/releases) 下载对应平台的压缩包，解压后直接运行：
 
-### 后端
+```bash
+./wekeep
+```
+
+首次运行会自动生成 `manifest/config/config.yaml`，默认使用 SQLite，无需额外依赖。修改该文件即可覆盖默认配置。
+
+### 从源码构建
+
+**环境要求：** Go 1.24+、Node.js 22+
 
 ```bash
 # 克隆项目
-git clone https://github.com/cicbyte/wekeep.git
+git clone https://github.com/ciclebyte/wekeep.git
 cd wekeep
 
-# 初始化数据库
-mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS wekeep DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci"
-mysql -u root -p wekeep < resource/sql/mysql/init.sql
-
-# 修改配置
-# 编辑 manifest/config/config.yaml，配置数据库连接、存储、搜索等
-
-# 生成 DAO 代码
-make dao
+# 构建前端
+cd web && npm i && npm run build && cd ..
+mkdir -p resource/public/html && cp -r web/dist/* resource/public/html/
 
 # 运行
 gf run
 ```
 
-后端默认监听 `:8000`，API 文档访问 `http://localhost:8000/swagger`。
+后端默认监听 `:8000`。
 
-### 前端
+## 配置
 
-```bash
-cd web
-npm install
-npm run dev    # 开发服务器，端口 8898
-npm run build  # 构建到 web/dist/
+首次运行自动生成 `manifest/config/config.yaml`，默认配置：
+
+```yaml
+server:
+  address: ":8000"
+
+database:
+  default:
+    link: "sqlite::@file(wekeep.db)"    # 默认 SQLite，零依赖
+
+storage:
+  type: "local"
+  local:
+    basePath: "uploads"
+
+search:
+  enabled: false                          # 需安装 Meilisearch 后开启
 ```
 
-构建产物需复制到 `resource/public/html/` 供 Go 后端托管。
+切换 MySQL 示例：
+
+```yaml
+database:
+  default:
+    link: "mysql:root:password@tcp(127.0.0.1:3306)/wekeep?charset=utf8mb4&parseTime=true&loc=Local"
+```
+
+完整配置模板见 [`manifest/config/config.yaml.example`](manifest/config/config.yaml.example)。
+
+## Docker 部署
+
+```bash
+# 构建镜像
+docker build -t wekeep .
+
+# 运行（默认 SQLite）
+docker run -d -p 8000:8000 -v wekeep-data:/data wekeep
+
+# 运行（MySQL + Meilisearch）
+# 需自行创建 config.yaml 并挂载到 /app/manifest/config/config.yaml
+docker run -d -p 8000:8000 \
+  -v wekeep-data:/data \
+  -v ./config.yaml:/app/manifest/config/config.yaml \
+  wekeep
+```
+
+数据持久化挂载 `/data`，包含：
+- `/data/log/` — 日志
+- `/data/db/` — SQLite 数据库
+- `/data/uploads/` — 本地存储
 
 ## 项目结构
 
@@ -73,59 +115,27 @@ wekeep/
 │   ├── controller/          # HTTP 控制器
 │   ├── service/             # Service 接口定义
 │   ├── logic/               # 业务逻辑实现（init() 自动注册）
-│   ├── dao/                 # 数据访问层（自动生成）
+│   ├── dao/                 # 数据访问层（自动生成，勿手动编辑）
 │   ├── model/               # 数据模型（entity/do/info）
 │   ├── parser/              # 微信文章 HTML 解析器
 │   ├── storage/             # 存储抽象层（Local / RustFS）
-│   ├── mcp/                 # MCP Server（10 个工具）
+│   ├── mcp/                 # MCP Server（StreamableHTTP）
 │   └── router/              # 路由注册
 ├── library/
 │   ├── libMeilisearch/      # Meilisearch 客户端封装
 │   └── libRouter/           # 路由自动绑定
 ├── web/                     # React 前端
-│   ├── components/          # UI 组件
-│   ├── services/            # API 调用服务
-│   └── hooks/               # 状态管理
 ├── resource/
-│   ├── config/config.yaml   # 主配置
-│   ├── public/html/         # 前端构建产物
-│   └── sql/                 # 数据库脚本
-│       ├── mysql/init.sql   # MySQL 一键初始化
-│       └── sqlite/init.sql  # SQLite 一键初始化
-└── hack/                    # GoFrame CLI 配置
-```
-
-## 配置说明
-
-主配置文件 `manifest/config/config.yaml`：
-
-```yaml
-server:
-  address: ":8000"
-
-database:
-  default:
-    link: "mysql:root:password@tcp(127.0.0.1:3306)/wekeep?charset=utf8mb4&parseTime=true&loc=Local"
-
-storage:
-  type: "local"              # local 或 rustfs
-  local:
-    basePath: "./uploads"
-  rustfs:
-    endpoint: "http://localhost:9000"
-    bucket: "wekeep"
-  migration:
-    enabled: true            # 是否启用存储迁移功能
-
-search:
-  enabled: true              # 是否启用 Meilisearch 全文搜索
-  meilisearch:
-    address: "http://localhost:7700"
+│   ├── public/html/         # 前端构建产物（打包进二进制）
+│   └── sql/                 # 数据库初始化脚本（打包进二进制）
+├── scripts/                 # 构建/发布脚本
+├── manifest/config/         # 配置文件
+├── hack/config.yaml         # GoFrame CLI 配置
+├── Dockerfile               # 多阶段构建
+└── .github/workflows/       # CI/CD
 ```
 
 ## API
-
-后端提供 RESTful API，主要端点：
 
 | 模块 | 路径 | 说明 |
 |------|------|------|
@@ -136,15 +146,24 @@ search:
 | 搜索 | `/api/v1/search/*` | 全文搜索 |
 | 存储 | `/api/v1/storage/*` | 存储后端管理 |
 | MCP | `/mcp/*` | MCP Server（StreamableHTTP） |
+| 系统 | `/api/v1/health/*` | 健康检查、版本信息 |
 
-## 部署
+## 发布
+
+使用 `scripts/release.py` 自动完成版本升级、提交、打标签：
 
 ```bash
-make build        # 构建二进制
-make image        # Docker 镜像
-make image.push   # 构建并推送
-make deploy       # kubectl 部署
+# 自动 patch 升级（0.0.6 → 0.0.7）
+python scripts/release.py
+
+# 手动指定版本
+python scripts/release.py 1.0.0
 ```
+
+推送 tag 后 GitHub Actions 自动构建 5 个平台的二进制并创建 Release：
+- `linux/amd64`、`linux/arm64`
+- `windows/amd64`
+- `darwin/amd64`、`darwin/arm64`
 
 ## License
 

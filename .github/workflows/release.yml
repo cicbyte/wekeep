@@ -33,14 +33,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: web/package-lock.json
 
       - name: Build frontend
         run: |
           cd web
-          npm ci
+          rm -f package-lock.json
+          npm i
           npm run build
+          mkdir -p ../resource/public/html
           cp -r dist/* ../resource/public/html/
 
       - name: Setup Go
@@ -48,22 +48,21 @@ jobs:
         with:
           go-version: '1.24'
 
-      - name: Read version
-        id: version
-        run: echo "v=$(cat VERSION)" >> $GITHUB_OUTPUT
+      - name: Install GoFrame CLI
+        run: go install github.com/gogf/gf/cmd/gf/v2@latest
 
       - name: Build binary
-        env:
-          GOOS: ${{ matrix.goos }}
-          GOARCH: ${{ matrix.goarch }}
-          CGO_ENABLED: 0
         run: |
-          BINARY=wekeep
-          if [ "$GOOS" = "windows" ]; then
-            BINARY=wekeep.exe
-          fi
-          go build -ldflags="-s -w -X github.com/ciclebyte/wekeep/internal/logic/health.Version=${{ steps.version.outputs.v }}" -o $BINARY .
-          tar -czf wekeep_${GOOS}_${GOARCH}.tar.gz $BINARY
+          VERSION=$(cat VERSION)
+          # 复制默认配置（config.yaml 被 gitignore，CI 中不存在）
+          cp manifest/config/config.yaml.example manifest/config/config.yaml
+          # 使用 gf build 进行交叉编译（自动打包资源 + 注入版本）
+          gf build -n wekeep -v ${VERSION} \
+            -a ${{ matrix.goarch }} -s ${{ matrix.goos }} \
+            -p ./bin
+          # 打包为 tar.gz
+          cd ./bin/${VERSION}/${{ matrix.goos }}_${{ matrix.goarch }}
+          tar -czf ../../../wekeep_${{ matrix.goos }}_${{ matrix.goarch }}.tar.gz wekeep*
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

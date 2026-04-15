@@ -9,6 +9,7 @@ import (
 	api "github.com/ciclebyte/wekeep/api/v1/health"
 	service "github.com/ciclebyte/wekeep/internal/service"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gbuild"
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
@@ -80,13 +81,11 @@ func (s *sHealth) Version(ctx context.Context) (res *api.VersionRes, err error) 
 	return
 }
 
-// Version 版本号，编译时通过 ldflags 注入: -X github.com/ciclebyte/wekeep/internal/logic/health.Version=x.x.x
-var Version = "unknown"
-
-// getVersion 获取版本号，优先使用编译注入值，降级读取 VERSION 文件（开发模式）
+// getVersion 获取版本号
+// 优先使用 gbuild 注入值（gf build -v），降级读取 VERSION 文件（开发模式）
 func getVersion() string {
-	if Version != "unknown" {
-		return Version
+	if v := gbuild.Get(gbuild.BuiltVersion); v != nil && v.String() != "" {
+		return v.String()
 	}
 	data, err := os.ReadFile("VERSION")
 	if err != nil {

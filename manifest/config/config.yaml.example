@@ -1,0 +1,50 @@
+# WeKeep 配置模板
+# 使用: cp config.yaml.example config.yaml
+
+server:
+  address: ":8000"
+  logPath: "/data/log/server"
+  logStdout: true
+  errorStack: true
+  errorLogEnabled: true
+  errorLogPattern: "error-{Ymd}.log"
+  accessLogEnabled: true
+  accessLogPattern: "access-{Ymd}.log"
+
+logger:
+  path: "/data/log/run"
+  file: "{Y-m-d}.log"
+  level: "all"
+  stdout: true
+
+database:
+  default:
+    link: "sqlite::@file(/data/db/wekeep.db)"
+    # MySQL
+    #link: "mysql:root:123456@tcp(172.17.0.1:3306)/wekeep?charset=utf8mb4&parseTime=true&loc=Local"
+
+storage:
+  type: "local"
+  local:
+    basePath: "/data/uploads"
+    baseURL: "/uploads"
+  # RustFS（S3 兼容对象存储）
+  #type: "rustfs"
+  #rustfs:
+  #  endpoint: "http://172.17.0.1:9000"
+  #  bucket: "wekeep"
+  #  username: "rustfsadmin"
+  #  password: "rustfsadmin"
+  #  timeout: 60
+  image:
+    maxFileSize: 10485760
+    pathPrefix: "articles/images"
+  migration:
+    enabled: false
+
+search:
+  enabled: false
+  # Meilisearch 全文搜索
+  #enabled: true
+  #meilisearch:
+  #  address: "http://172.17.0.1:7700"

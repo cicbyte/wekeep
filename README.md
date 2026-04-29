@@ -6,6 +6,7 @@
 
 [![Docker Image](https://img.shields.io/badge/ghcr.io-cicbyte%2Fwekeep-blue?style=flat-square)](https://ghcr.io/cicbyte/wekeep)
 [![Docker Build](https://img.shields.io/github/actions/workflow/status/cicbyte/wekeep/docker-image.yml?branch=master&style=flat-square)](https://github.com/cicbyte/wekeep/actions)
+[![Release](https://img.shields.io/github/actions/workflow/status/cicbyte/wekeep/release.yml?branch=master&style=flat-square)](https://github.com/cicbyte/wekeep/actions)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/cicbyte/wekeep?style=flat-square)](https://go.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 

@@ -30,7 +30,7 @@
 | 前端 | React 19 / TypeScript 5.8 / Vite 6.2 / Tailwind CSS |
 | 搜索 | Meilisearch（可选） |
 | 存储 | 本地文件系统 / S3 兼容（RustFS） |
-| AI | Gemini API（文章解析）/ MCP Server（AI 工具集成） |
+| AI | MCP Server（AI 工具集成） |
 
 ## 快速开始
 

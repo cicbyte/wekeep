@@ -30,7 +30,7 @@ English | [简体中文](README.md)
 | Frontend | React 19 / TypeScript 5.8 / Vite 6.2 / Tailwind CSS |
 | Search | Meilisearch (optional) |
 | Storage | Local filesystem / S3-compatible (RustFS) |
-| AI | Gemini API (article parsing) / MCP Server (AI tool integration) |
+| AI | MCP Server (AI tool integration) |
 
 ## Quick Start
 

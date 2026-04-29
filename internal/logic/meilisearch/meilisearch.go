@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ciclebyte/wekeep/internal/model"
-	service "github.com/ciclebyte/wekeep/internal/service"
-	"github.com/ciclebyte/wekeep/library/libMeilisearch"
-	liberr "github.com/ciclebyte/wekeep/library/liberr"
+	"github.com/cicbyte/wekeep/internal/model"
+	service "github.com/cicbyte/wekeep/internal/service"
+	"github.com/cicbyte/wekeep/library/libMeilisearch"
+	liberr "github.com/cicbyte/wekeep/library/liberr"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

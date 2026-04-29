@@ -1,7 +1,7 @@
 package common
 
 import (
-	"github.com/ciclebyte/wekeep/internal/model"
+	"github.com/cicbyte/wekeep/internal/model"
 )
 
 // PageReq 公共请求参数

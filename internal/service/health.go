@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	api "github.com/ciclebyte/wekeep/api/v1/health"
+	api "github.com/cicbyte/wekeep/api/v1/health"
 )
 
 type IHealth interface {

@@ -13,7 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **搜索**: Meilisearch
 **存储**: 本地文件系统 / RustFS（S3 兼容，通过 AWS SDK v2）
 **AI**: Gemini API（前端文章解析）+ MCP Server（后端 AI 工具集成）
-**模块路径**: `github.com/ciclebyte/wekeep`
+**模块路径**: `github.com/cicbyte/wekeep`
 
 ## 常用命令
 

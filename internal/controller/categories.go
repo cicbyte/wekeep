@@ -3,9 +3,9 @@ package controller
 import (
 	"context"
 
-	api "github.com/ciclebyte/wekeep/api/v1/categories"
-	consts "github.com/ciclebyte/wekeep/internal/consts"
-	service "github.com/ciclebyte/wekeep/internal/service"
+	api "github.com/cicbyte/wekeep/api/v1/categories"
+	consts "github.com/cicbyte/wekeep/internal/consts"
+	service "github.com/cicbyte/wekeep/internal/service"
 )
 
 var Categories = categoriesController{}

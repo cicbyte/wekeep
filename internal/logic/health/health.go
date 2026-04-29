@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	api "github.com/ciclebyte/wekeep/api/v1/health"
-	service "github.com/ciclebyte/wekeep/internal/service"
+	api "github.com/cicbyte/wekeep/api/v1/health"
+	service "github.com/cicbyte/wekeep/internal/service"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gbuild"
 	"github.com/gogf/gf/v2/os/gtime"

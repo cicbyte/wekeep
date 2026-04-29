@@ -3,7 +3,7 @@ package meilisearch
 import (
 	"context"
 
-	"github.com/ciclebyte/wekeep/internal/logic/meilisearch"
+	"github.com/cicbyte/wekeep/internal/logic/meilisearch"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

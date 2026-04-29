@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/ciclebyte/wekeep/internal/service"
+	"github.com/cicbyte/wekeep/internal/service"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 

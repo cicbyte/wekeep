@@ -2,7 +2,7 @@
 package images
 
 import (
-	commonApi "github.com/ciclebyte/wekeep/api/v1/common"
+	commonApi "github.com/cicbyte/wekeep/api/v1/common"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

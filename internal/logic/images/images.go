@@ -14,14 +14,14 @@ import (
 	"strings"
 	"time"
 
-	api "github.com/ciclebyte/wekeep/api/v1/images"
-	dao "github.com/ciclebyte/wekeep/internal/dao"
-	model "github.com/ciclebyte/wekeep/internal/model"
-	do "github.com/ciclebyte/wekeep/internal/model/do"
-	entity "github.com/ciclebyte/wekeep/internal/model/entity"
-	"github.com/ciclebyte/wekeep/internal/storage"
-	service "github.com/ciclebyte/wekeep/internal/service"
-	liberr "github.com/ciclebyte/wekeep/library/liberr"
+	api "github.com/cicbyte/wekeep/api/v1/images"
+	dao "github.com/cicbyte/wekeep/internal/dao"
+	model "github.com/cicbyte/wekeep/internal/model"
+	do "github.com/cicbyte/wekeep/internal/model/do"
+	entity "github.com/cicbyte/wekeep/internal/model/entity"
+	"github.com/cicbyte/wekeep/internal/storage"
+	service "github.com/cicbyte/wekeep/internal/service"
+	liberr "github.com/cicbyte/wekeep/library/liberr"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

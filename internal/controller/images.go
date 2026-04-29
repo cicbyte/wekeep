@@ -6,10 +6,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	api "github.com/ciclebyte/wekeep/api/v1/images"
-	"github.com/ciclebyte/wekeep/internal/consts"
-	storagePkg "github.com/ciclebyte/wekeep/internal/storage"
-	service "github.com/ciclebyte/wekeep/internal/service"
+	api "github.com/cicbyte/wekeep/api/v1/images"
+	"github.com/cicbyte/wekeep/internal/consts"
+	storagePkg "github.com/cicbyte/wekeep/internal/storage"
+	service "github.com/cicbyte/wekeep/internal/service"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 

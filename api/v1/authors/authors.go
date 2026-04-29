@@ -1,8 +1,8 @@
 package authors
 
 import (
-	commonApi "github.com/ciclebyte/wekeep/api/v1/common"
-	model "github.com/ciclebyte/wekeep/internal/model"
+	commonApi "github.com/cicbyte/wekeep/api/v1/common"
+	model "github.com/cicbyte/wekeep/internal/model"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

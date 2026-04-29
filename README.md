@@ -5,8 +5,8 @@
 > 微信公众号文章收藏管理工具 — 一键收藏、全文搜索、图片本地化、AI 驱动。
 
 [![Docker Image](https://img.shields.io/badge/ghcr.io-cicbyte%2Fwekeep-blue?style=flat-square)](https://ghcr.io/cicbyte/wekeep)
-[![Docker Build](https://img.shields.io/github/actions/workflow/status/ciclebyte/wekeep/docker-image.yml?branch=master&style=flat-square)](https://github.com/ciclebyte/wekeep/actions)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/ciclebyte/wekeep?style=flat-square)](https://go.dev/)
+[![Docker Build](https://img.shields.io/github/actions/workflow/status/cicbyte/wekeep/docker-image.yml?branch=master&style=flat-square)](https://github.com/cicbyte/wekeep/actions)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/cicbyte/wekeep?style=flat-square)](https://go.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ![仪表盘](images/dashboard.png) ![文章列表](images/articles.png) ![作者管理](images/author.png) ![设置](images/settings.png)
@@ -35,7 +35,7 @@
 
 ### 下载预编译二进制
 
-从 [Releases](https://github.com/ciclebyte/wekeep/releases) 下载对应平台的压缩包，解压后直接运行：
+从 [Releases](https://github.com/cicbyte/wekeep/releases) 下载对应平台的压缩包，解压后直接运行：
 
 ```bash
 ./wekeep
@@ -49,7 +49,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/ciclebyte/wekeep.git
+git clone https://github.com/cicbyte/wekeep.git
 cd wekeep
 
 # 构建前端

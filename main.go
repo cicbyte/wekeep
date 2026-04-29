@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	_ "github.com/ciclebyte/wekeep/internal/packed"
+	_ "github.com/cicbyte/wekeep/internal/packed"
 	//重要 需要导入数据库驱动
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	// SQLite数据库驱动,如果需要支持需要go get -u github.com/gogf/gf/contrib/drivers/sqlite/v2
@@ -13,7 +13,7 @@ import (
 	"github.com/gogf/gf/v2/os/gbuild"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	"github.com/ciclebyte/wekeep/internal/cmd"
+	"github.com/cicbyte/wekeep/internal/cmd"
 )
 
 // 默认配置（首次运行时自动创建，用户可修改）

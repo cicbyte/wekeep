@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"github.com/ciclebyte/wekeep/internal/dao/internal"
+	"github.com/cicbyte/wekeep/internal/dao/internal"
 )
 
 // articleImagesDao is the data access object for the table article_images.

@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	api "github.com/ciclebyte/wekeep/api/v1/categories"
-	model "github.com/ciclebyte/wekeep/internal/model"
+	api "github.com/cicbyte/wekeep/api/v1/categories"
+	model "github.com/cicbyte/wekeep/internal/model"
 )
 
 type ICategories interface {

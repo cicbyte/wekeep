@@ -5,8 +5,8 @@ import (
 	"context"
 	"fmt"
 
-	api "github.com/ciclebyte/wekeep/api/v1/storage"
-	storageLogic "github.com/ciclebyte/wekeep/internal/storage"
+	api "github.com/cicbyte/wekeep/api/v1/storage"
+	storageLogic "github.com/cicbyte/wekeep/internal/storage"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

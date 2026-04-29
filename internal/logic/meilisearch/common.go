@@ -3,10 +3,10 @@ package meilisearch
 import (
 	"context"
 
-	articlesApi "github.com/ciclebyte/wekeep/api/v1/articles"
-	service "github.com/ciclebyte/wekeep/internal/service"
-	"github.com/ciclebyte/wekeep/library/libMeilisearch"
-	liberr "github.com/ciclebyte/wekeep/library/liberr"
+	articlesApi "github.com/cicbyte/wekeep/api/v1/articles"
+	service "github.com/cicbyte/wekeep/internal/service"
+	"github.com/cicbyte/wekeep/library/libMeilisearch"
+	liberr "github.com/cicbyte/wekeep/library/liberr"
 	"github.com/gogf/gf/v2/frame/g"
 )
 

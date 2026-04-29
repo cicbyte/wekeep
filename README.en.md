@@ -5,8 +5,8 @@ English | [简体中文](README.md)
 > A WeChat Official Account article bookmarking tool — one-click save, full-text search, image localization, and AI-driven management.
 
 [![Docker Image](https://img.shields.io/badge/ghcr.io-cicbyte%2Fwekeep-blue?style=flat-square)](https://ghcr.io/cicbyte/wekeep)
-[![Docker Build](https://img.shields.io/github/actions/workflow/status/ciclebyte/wekeep/docker-image.yml?branch=master&style=flat-square)](https://github.com/ciclebyte/wekeep/actions)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/ciclebyte/wekeep?style=flat-square)](https://go.dev/)
+[![Docker Build](https://img.shields.io/github/actions/workflow/status/cicbyte/wekeep/docker-image.yml?branch=master&style=flat-square)](https://github.com/cicbyte/wekeep/actions)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/cicbyte/wekeep?style=flat-square)](https://go.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ![Dashboard](images/dashboard.png) ![Article List](images/articles.png) ![Author Management](images/author.png) ![Settings](images/settings.png)
@@ -35,7 +35,7 @@ English | [简体中文](README.md)
 
 ### Pre-built Binary
 
-Download the archive for your platform from [Releases](https://github.com/ciclebyte/wekeep/releases), extract and run:
+Download the archive for your platform from [Releases](https://github.com/cicbyte/wekeep/releases), extract and run:
 
 ```bash
 ./wekeep
@@ -49,7 +49,7 @@ On first run, `manifest/config/config.yaml` is auto-generated with SQLite as the
 
 ```bash
 # Clone the repo
-git clone https://github.com/ciclebyte/wekeep.git
+git clone https://github.com/cicbyte/wekeep.git
 cd wekeep
 
 # Build the frontend

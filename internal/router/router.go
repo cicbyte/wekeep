@@ -3,12 +3,12 @@ package router
 import (
 	"context"
 
-	controller "github.com/ciclebyte/wekeep/internal/controller"
-	meilisearchController "github.com/ciclebyte/wekeep/internal/controller/meilisearch"
-	storageController "github.com/ciclebyte/wekeep/internal/controller/storage"
+	controller "github.com/cicbyte/wekeep/internal/controller"
+	meilisearchController "github.com/cicbyte/wekeep/internal/controller/meilisearch"
+	storageController "github.com/cicbyte/wekeep/internal/controller/storage"
 
-	"github.com/ciclebyte/wekeep/internal/service"
-	"github.com/ciclebyte/wekeep/library/libRouter"
+	"github.com/cicbyte/wekeep/internal/service"
+	"github.com/cicbyte/wekeep/library/libRouter"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 

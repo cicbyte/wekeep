@@ -1,16 +1,25 @@
 # WeKeep
 
-微信公众号文章收藏管理工具。支持文章抓取、全文搜索、图片本地化存储、MCP 协议 AI 集成。
+[English](README.en.md) | 简体中文
+
+> 微信公众号文章收藏管理工具 — 一键收藏、全文搜索、图片本地化、AI 驱动。
+
+[![Docker Image](https://img.shields.io/badge/ghcr.io-cicbyte%2Fwekeep-blue?style=flat-square)](https://ghcr.io/cicbyte/wekeep)
+[![Docker Build](https://img.shields.io/github/actions/workflow/status/ciclebyte/wekeep/docker-image.yml?branch=master&style=flat-square)](https://github.com/ciclebyte/wekeep/actions)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/ciclebyte/wekeep?style=flat-square)](https://go.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+
+![仪表盘](images/dashboard.png) ![文章列表](images/articles.png) ![作者管理](images/author.png) ![设置](images/settings.png)
 
 ## 功能特性
 
 - **文章收藏** — 抓取微信公众号文章，提取标题/作者/正文/图片，转换为 Markdown
 - **全文搜索** — 基于 Meilisearch 的全文检索，支持标题、作者、摘要、内容搜索
-- **图片本地化** — 自动下载文章图片到本地/S3 存储，支持存储后端迁移
-- **AI 集成** — MCP Server 提供 10 个工具，支持 Claude 等 AI 客户端直接操作文章
-- **分类管理** — 文章分类、标签体系
+- **图片本地化** — 自动下载文章图片到本地 / S3 存储，支持存储后端切换
+- **AI 集成** — 内置 MCP Server，Claude / Cursor 等客户端可直接操作文章
+- **分类与标签** — 灵活的分类管理和标签体系
 - **作者管理** — 自动提取作者信息，按作者浏览文章
-- **零配置启动** — 首次运行自动生成默认配置文件，开箱即用
+- **零配置启动** — 首次运行自动生成默认配置，默认 SQLite，开箱即用
 
 ## 技术栈
 
@@ -19,7 +28,7 @@
 | 后端 | Go 1.24 / GoFrame v2.10.0 / MySQL / SQLite |
 | 前端 | React 19 / TypeScript 5.8 / Vite 6.2 / Tailwind CSS |
 | 搜索 | Meilisearch（可选） |
-| 存储 | 本地文件系统 / RustFS（S3 兼容） |
+| 存储 | 本地文件系统 / S3 兼容（RustFS） |
 | AI | Gemini API（文章解析）/ MCP Server（AI 工具集成） |
 
 ## 快速开始
@@ -32,7 +41,7 @@
 ./wekeep
 ```
 
-首次运行会自动生成 `manifest/config/config.yaml`，默认使用 SQLite，无需额外依赖。修改该文件即可覆盖默认配置。
+首次运行会自动生成 `manifest/config/config.yaml`，默认使用 SQLite，无需额外依赖。
 
 ### 从源码构建
 
@@ -86,24 +95,64 @@ database:
 
 ## Docker 部署
 
-```bash
-# 构建镜像
-docker build -t wekeep .
+从 GHCR 拉取镜像：
 
-# 运行
+```bash
+docker pull ghcr.io/cicbyte/wekeep:latest
+
 docker run -d -p 8000:8000 \
   -v ./manifest:/app/manifest \
   -v ./log:/app/log \
   -v ./uploads:/app/uploads \
   -v ./db:/app/db \
-  wekeep
+  ghcr.io/cicbyte/wekeep:latest
+```
+
+也可从源码构建镜像：
+
+```bash
+docker build -t wekeep .
 ```
 
 挂载说明：
-- `./manifest` → `/app/manifest` — 配置文件（首次运行自动生成 `config.yaml`，可直接修改）
-- `./log` → `/app/log` — 日志
-- `./uploads` → `/app/uploads` — 上传文件
-- `./db` → `/app/db` — SQLite 数据库
+
+| 宿主机路径 | 容器路径 | 说明 |
+|-----------|---------|------|
+| `./manifest` | `/app/manifest` | 配置文件（首次运行自动生成 `config.yaml`） |
+| `./log` | `/app/log` | 日志 |
+| `./uploads` | `/app/uploads` | 上传文件 |
+| `./db` | `/app/db` | SQLite 数据库文件 |
+
+## MCP Server
+
+WeKeep 内置 MCP Server，支持 Claude Desktop、Cursor 等 AI 客户端直接操作文章收藏。
+
+**MCP 端点：** `http://localhost:8000/mcp`（StreamableHTTP）
+
+**配置示例（Claude Desktop）：**
+
+```json
+{
+  "mcpServers": {
+    "wekeep": {
+      "url": "http://localhost:8000/mcp"
+    }
+  }
+}
+```
+
+**可用工具：**
+
+| 工具名 | 说明 |
+|--------|------|
+| `wechat_parse_url` | 解析微信文章 URL，提取标题/作者/正文 |
+| `wechat_save_article` | 保存文章到收藏 |
+| `wechat_list_articles` | 列出文章列表（支持分页） |
+| `wechat_get_article` | 获取单篇文章详情 |
+| `wechat_search_articles` | 全文搜索文章 |
+| `wechat_get_tags` | 获取所有标签 |
+| `wechat_get_stats` | 获取文章统计数据 |
+| `wechat_delete_article` | 删除文章 |
 
 ## 项目结构
 
@@ -117,7 +166,7 @@ wekeep/
 │   ├── dao/                 # 数据访问层（自动生成，勿手动编辑）
 │   ├── model/               # 数据模型（entity/do/info）
 │   ├── parser/              # 微信文章 HTML 解析器
-│   ├── storage/             # 存储抽象层（Local / RustFS）
+│   ├── storage/             # 存储抽象层（Local / S3）
 │   ├── mcp/                 # MCP Server（StreamableHTTP）
 │   └── router/              # 路由注册
 ├── library/
@@ -129,7 +178,6 @@ wekeep/
 │   └── sql/                 # 数据库初始化脚本（打包进二进制）
 ├── scripts/                 # 构建/发布脚本
 ├── manifest/config/         # 配置文件
-├── hack/config.yaml         # GoFrame CLI 配置
 ├── Dockerfile               # 多阶段构建
 └── .github/workflows/       # CI/CD
 ```
@@ -147,23 +195,6 @@ wekeep/
 | MCP | `/mcp/*` | MCP Server（StreamableHTTP） |
 | 系统 | `/api/v1/health/*` | 健康检查、版本信息 |
 
-## 发布
-
-使用 `scripts/release.py` 自动完成版本升级、提交、打标签：
-
-```bash
-# 自动 patch 升级（0.0.6 → 0.0.7）
-python scripts/release.py
-
-# 手动指定版本
-python scripts/release.py 1.0.0
-```
-
-推送 tag 后 GitHub Actions 自动构建 5 个平台的二进制并创建 Release：
-- `linux/amd64`、`linux/arm64`
-- `windows/amd64`
-- `darwin/amd64`、`darwin/arm64`
-
 ## License
 
-MIT
+[MIT](LICENSE)

@@ -67,3 +67,4 @@ config.yaml
 # 打包资源（自动生成）
 internal/packed/
 delete_tags.py
+.reference/
